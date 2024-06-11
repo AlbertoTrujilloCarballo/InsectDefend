@@ -13,7 +13,8 @@ public class AudioManager : MonoBehaviour
 
     // Se crean dos AudioSources diferentes para que se puedan
     // reproducir los efectos y la música de fondo al mismo tiempo
-    public AudioSource sfxSource; // Componente AudioSource para efectos de sonido
+    // Añadimos una lista de AudioSources para efectos de sonido
+    public List<AudioSource> sfxSources = new List<AudioSource>();
     public AudioSource musicSource; // Componente AudioSource para la música de fondo
 
     // En vez de usar un vector de AudioClips (que podría ser) vamos a utilizar un Diccionario
@@ -69,8 +70,26 @@ public class AudioManager : MonoBehaviour
     {
         if (sfxClips.ContainsKey(clipName))
         {
-            sfxSource.clip = sfxClips[clipName];
-            sfxSource.Play();
+            if (clipName == "Shot")
+            {
+                sfxSources[0].clip = sfxClips[clipName];
+                sfxSources[0].Play();
+            }
+            else if (clipName == "Dead")
+            {
+                sfxSources[1].clip = sfxClips[clipName];
+                sfxSources[1].Play();
+            }
+            else if (clipName == "Bite")
+            {
+                sfxSources[2].clip = sfxClips[clipName];
+                sfxSources[2].Play();
+            }
+            else
+            {
+                sfxSources[3].clip = sfxClips[clipName];
+                sfxSources[3].Play();
+            }
         }
         else Debug.LogWarning("El AudioClip " + clipName + " no se encontró en el diccionario de sfxClips.");
 
